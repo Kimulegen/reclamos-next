@@ -2,6 +2,7 @@
 import React, { FormEvent, useState } from 'react';
 import ImagePreview from "./ImagePreview";
 import Image from 'next/image';
+import axios from 'axios';
 
 const UploadForm = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,24 +46,25 @@ const UploadForm = () => {
                 formDataObj.append(key, formData[key]);
             }
         }
-
+        console.log(formDataObj)
         const apiUrl = '/api/submit'
 
-        const fetchOptions = {
-            method: "POST",
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            body: JSON.stringify(formDataObj)
-        }
+        // const fetchOptions = {
+        //     method: "POST",
+        //     headers: {
+        //         'Content-Type': 'multipart/form-data'
+        //     },
+        //     body: formDataObj
+        // }
 
-        try {
-            const response = await fetch(apiUrl, fetchOptions);
-            // const data = await response.json();
-            setIsModalOpen(true);
-        } catch(err) {
-            console.error(err);
-        }
+        // try {
+        //     const response = await fetch(apiUrl, fetchOptions);
+        //     // const data = await response.json();
+        //     setIsModalOpen(true);
+        // } catch(err) {
+        //     console.error(err);
+        // }
+        await axios.post('/api/submit', formDataObj)
     };
 
     const closeModal = () => {
